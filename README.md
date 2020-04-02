@@ -1,6 +1,13 @@
 # pxt-rovercode
 
+## Development Usage
 
+```bash
+$ sudo npm install -g pxt
+$ pxt target microbit
+$ pxt install
+$ pxt build # output at built/binary.hex
+```
 
 ## TODO
 
