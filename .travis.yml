@@ -1,0 +1,54 @@
+language: node_js
+node_js:
+- 8.9.4
+script:
+- npm install -g pxt
+- pxt target microbit
+- pxt install
+- pxt build
+- mv built/binary.hex built/rovercode.hex
+sudo: false
+cache:
+  directories:
+  - npm_modules
+  - pxt_modules
+deploy:
+  - provider: s3
+    skip_cleanup: true
+    access_key_id: AKIA3SJYAB3IVB4RTHPU
+    secret_access_key:
+      secure: 0SnH2IH7fiWyq5wuzuTqnbcxA2ebhfXfAFE0POkOkRMvaqAMGxPTIoQczw90pbYxbeWEG5U03pIMuSjghQ236Nw8TRv8uenR3q3DMtmoA22R0CN9FK2+RGrkLK1X1i5+rFnvW4AOuNE6zP0xG8BDiqUO32bFeOeJ/UxUnnLr5U2gTZrAjZyARH0y/C0AmR4bRhNWRyErM8bAbEiu7hNo+kbCzMkjFfGYQxfzkHB2j3YOm/R7hMSNo4cr+7+7Vrcs7Bf6VTtYqLQR/1VxjoxU95IOPGBg4iWareT86B+ovSTjq70rU8XHEc0oZCG6MYhZ0nDxalUkIudnzJqSVSbb5spdbDFzTvIxQqbcpgdJUvdBNo3uaXgd7teciroLyBG2qYqFJbM809zV8p6lsIV2Y+wK3BfxZiE1cyNZdM62ML5lXS0DHI0IYtiUmnqI3odkWk3Pn+Zt+BLcsgZcszYtdigMvt8CA8vKtIyI5Vv/OfDljCnGYKDAw1afzTA/aW2DkmmpcOZqB5Q9wwDgqlGM7mpiw5VNgY497xfT/XlfyF9EXHCU1a5dEqsLtBWOSEWsPkQ+j/HCECxFbX8KgZeLJVEztWOLHXqxTWJTGs813fnJ6rH03bWXzuV0WZNZLrDtEog6nPVwv8N3GVti0Y+hFGJVXJ4wO/asFnFmwOFk0Sw=
+    bucket: rovercode-pxt
+    region: us-east-2
+    local_dir: built
+    upload_dir: prod
+    acl: public_read
+    on:
+      repo: rovercode/pxt-rovercode
+      branch: master
+  - provider: s3
+    skip_cleanup: true
+    access_key_id: AKIA3SJYAB3IVB4RTHPU
+    secret_access_key:
+      secure: 0SnH2IH7fiWyq5wuzuTqnbcxA2ebhfXfAFE0POkOkRMvaqAMGxPTIoQczw90pbYxbeWEG5U03pIMuSjghQ236Nw8TRv8uenR3q3DMtmoA22R0CN9FK2+RGrkLK1X1i5+rFnvW4AOuNE6zP0xG8BDiqUO32bFeOeJ/UxUnnLr5U2gTZrAjZyARH0y/C0AmR4bRhNWRyErM8bAbEiu7hNo+kbCzMkjFfGYQxfzkHB2j3YOm/R7hMSNo4cr+7+7Vrcs7Bf6VTtYqLQR/1VxjoxU95IOPGBg4iWareT86B+ovSTjq70rU8XHEc0oZCG6MYhZ0nDxalUkIudnzJqSVSbb5spdbDFzTvIxQqbcpgdJUvdBNo3uaXgd7teciroLyBG2qYqFJbM809zV8p6lsIV2Y+wK3BfxZiE1cyNZdM62ML5lXS0DHI0IYtiUmnqI3odkWk3Pn+Zt+BLcsgZcszYtdigMvt8CA8vKtIyI5Vv/OfDljCnGYKDAw1afzTA/aW2DkmmpcOZqB5Q9wwDgqlGM7mpiw5VNgY497xfT/XlfyF9EXHCU1a5dEqsLtBWOSEWsPkQ+j/HCECxFbX8KgZeLJVEztWOLHXqxTWJTGs813fnJ6rH03bWXzuV0WZNZLrDtEog6nPVwv8N3GVti0Y+hFGJVXJ4wO/asFnFmwOFk0Sw=
+    bucket: rovercode-pxt
+    region: us-east-2
+    local_dir: built
+    upload_dir: beta
+    acl: public_read
+    on:
+      repo: rovercode/pxt-rovercode
+      branch: beta
+  - provider: s3
+    skip_cleanup: true
+    access_key_id: AKIA3SJYAB3IVB4RTHPU
+    secret_access_key:
+      secure: 0SnH2IH7fiWyq5wuzuTqnbcxA2ebhfXfAFE0POkOkRMvaqAMGxPTIoQczw90pbYxbeWEG5U03pIMuSjghQ236Nw8TRv8uenR3q3DMtmoA22R0CN9FK2+RGrkLK1X1i5+rFnvW4AOuNE6zP0xG8BDiqUO32bFeOeJ/UxUnnLr5U2gTZrAjZyARH0y/C0AmR4bRhNWRyErM8bAbEiu7hNo+kbCzMkjFfGYQxfzkHB2j3YOm/R7hMSNo4cr+7+7Vrcs7Bf6VTtYqLQR/1VxjoxU95IOPGBg4iWareT86B+ovSTjq70rU8XHEc0oZCG6MYhZ0nDxalUkIudnzJqSVSbb5spdbDFzTvIxQqbcpgdJUvdBNo3uaXgd7teciroLyBG2qYqFJbM809zV8p6lsIV2Y+wK3BfxZiE1cyNZdM62ML5lXS0DHI0IYtiUmnqI3odkWk3Pn+Zt+BLcsgZcszYtdigMvt8CA8vKtIyI5Vv/OfDljCnGYKDAw1afzTA/aW2DkmmpcOZqB5Q9wwDgqlGM7mpiw5VNgY497xfT/XlfyF9EXHCU1a5dEqsLtBWOSEWsPkQ+j/HCECxFbX8KgZeLJVEztWOLHXqxTWJTGs813fnJ6rH03bWXzuV0WZNZLrDtEog6nPVwv8N3GVti0Y+hFGJVXJ4wO/asFnFmwOFk0Sw=
+    bucket: rovercode-pxt
+    region: us-east-2
+    local_dir: built
+    upload_dir: alpha
+    acl: public_read
+    on:
+      repo: rovercode/pxt-rovercode
+      branch: alpha
