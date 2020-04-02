@@ -15,9 +15,8 @@ cache:
 deploy:
   - provider: s3
     skip_cleanup: true
-    access_key_id: AKIA3SJYAB3IVB4RTHPU
-    secret_access_key:
-      secure: TBSGNH8AM618VwCjEnWesRBFuXVtTMJC8BMyOlIIPBPLpqiJJyVZZmrg/7I/BZ8BJJ108T05fggqPmyJA8O4yZWPhPF1VGQkYBPCt/1JjeP/clt/0DJFrJ2NxwHphYBoW/+0tytAG43wlQPqnwvoJarWj6KUmPoJIJihf0kvMq0atLgjiroAZsillmCt2LzWmiwX6uzrqrS3BDV4BOxLmNHAgurzGsUv2f8KYRlZ63CZkPq0FS2dzQnuh+gleO+2RgZAApoItllqRfNsKZa5Bvqk57uhWwbb9Zpa2xblBZRhqI/4C/HK7siaKYDJ/QdnTMFJIPmO+8ejKfvqHekPU0Q3rP6q5/tSFnEYPGXviluQH5srkoB1poI6FXu4+3a9DBlolhCapHsAZwqlzsWLEE5YMrHHdhGyGYQ0QbHWC8LNcYj0hreuMNI8oQLdiVtVSbeC8Jtt/B8nViV0qOafJryaop4+qcAQYcwi35ZZ3xVEI6vvHrzfRPqNkxeRnIz/4QKIezSX7qoVYegKARbgQUbvbKuWhbExHRMx9f7WuTgaGOOYornrpjDb7sum8XGphLF1IT0JBiIgqrPx42PyJifbZvjO2UVloSFCK42VncOdEwmjcpdBM0mhSCoOs/1Nsa1ZuANBeKD4jC2K7t4mRQOCHivtlVtp7miblxYhVys=
+    access_key_id: $AWS_KEY_NAME
+    secret_access_key: $AWS_KEY_SECRET
     bucket: rovercode-pxt
     region: us-east-2
     local_dir: built
@@ -28,9 +27,8 @@ deploy:
       branch: master
   - provider: s3
     skip_cleanup: true
-    access_key_id: AKIA3SJYAB3IVB4RTHPU
-    secret_access_key:
-      secure: TBSGNH8AM618VwCjEnWesRBFuXVtTMJC8BMyOlIIPBPLpqiJJyVZZmrg/7I/BZ8BJJ108T05fggqPmyJA8O4yZWPhPF1VGQkYBPCt/1JjeP/clt/0DJFrJ2NxwHphYBoW/+0tytAG43wlQPqnwvoJarWj6KUmPoJIJihf0kvMq0atLgjiroAZsillmCt2LzWmiwX6uzrqrS3BDV4BOxLmNHAgurzGsUv2f8KYRlZ63CZkPq0FS2dzQnuh+gleO+2RgZAApoItllqRfNsKZa5Bvqk57uhWwbb9Zpa2xblBZRhqI/4C/HK7siaKYDJ/QdnTMFJIPmO+8ejKfvqHekPU0Q3rP6q5/tSFnEYPGXviluQH5srkoB1poI6FXu4+3a9DBlolhCapHsAZwqlzsWLEE5YMrHHdhGyGYQ0QbHWC8LNcYj0hreuMNI8oQLdiVtVSbeC8Jtt/B8nViV0qOafJryaop4+qcAQYcwi35ZZ3xVEI6vvHrzfRPqNkxeRnIz/4QKIezSX7qoVYegKARbgQUbvbKuWhbExHRMx9f7WuTgaGOOYornrpjDb7sum8XGphLF1IT0JBiIgqrPx42PyJifbZvjO2UVloSFCK42VncOdEwmjcpdBM0mhSCoOs/1Nsa1ZuANBeKD4jC2K7t4mRQOCHivtlVtp7miblxYhVys=
+    access_key_id: $AWS_KEY_NAME
+    secret_access_key: $AWS_KEY_SECRET
     bucket: rovercode-pxt
     region: us-east-2
     local_dir: built
@@ -41,9 +39,8 @@ deploy:
       branch: beta
   - provider: s3
     skip_cleanup: true
-    access_key_id: AKIA3SJYAB3IVB4RTHPU
-    secret_access_key:
-      secure: TBSGNH8AM618VwCjEnWesRBFuXVtTMJC8BMyOlIIPBPLpqiJJyVZZmrg/7I/BZ8BJJ108T05fggqPmyJA8O4yZWPhPF1VGQkYBPCt/1JjeP/clt/0DJFrJ2NxwHphYBoW/+0tytAG43wlQPqnwvoJarWj6KUmPoJIJihf0kvMq0atLgjiroAZsillmCt2LzWmiwX6uzrqrS3BDV4BOxLmNHAgurzGsUv2f8KYRlZ63CZkPq0FS2dzQnuh+gleO+2RgZAApoItllqRfNsKZa5Bvqk57uhWwbb9Zpa2xblBZRhqI/4C/HK7siaKYDJ/QdnTMFJIPmO+8ejKfvqHekPU0Q3rP6q5/tSFnEYPGXviluQH5srkoB1poI6FXu4+3a9DBlolhCapHsAZwqlzsWLEE5YMrHHdhGyGYQ0QbHWC8LNcYj0hreuMNI8oQLdiVtVSbeC8Jtt/B8nViV0qOafJryaop4+qcAQYcwi35ZZ3xVEI6vvHrzfRPqNkxeRnIz/4QKIezSX7qoVYegKARbgQUbvbKuWhbExHRMx9f7WuTgaGOOYornrpjDb7sum8XGphLF1IT0JBiIgqrPx42PyJifbZvjO2UVloSFCK42VncOdEwmjcpdBM0mhSCoOs/1Nsa1ZuANBeKD4jC2K7t4mRQOCHivtlVtp7miblxYhVys=
+    access_key_id: $AWS_KEY_NAME
+    secret_access_key: $AWS_KEY_SECRET
     bucket: rovercode-pxt
     region: us-east-2
     local_dir: built
