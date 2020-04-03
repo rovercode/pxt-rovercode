@@ -8,7 +8,7 @@
   "license": "GPL-3.0",
   "private": false,
   "scripts": {
-    "postinstall": "node_modules/pxt/pxt target microbit && node_module/pxt/pxt install",
+    "postinstall": "node_modules/pxt/pxt target microbit && node_modules/pxt/pxt install",
     "build": "node_modules/pxt/pxt build && mv built/binary.hex built/rovercode.hex && echo '\n\nOutput at built/rovercode.hex'"
   },
   "devDependencies": {
