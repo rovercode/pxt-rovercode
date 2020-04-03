@@ -2,11 +2,7 @@ language: node_js
 node_js:
 - 8.9.4
 script:
-- npm install -g pxt
-- pxt target microbit
-- pxt install
-- pxt build
-- mv built/binary.hex built/rovercode.hex
+- npm run build
 sudo: false
 cache:
   directories:
