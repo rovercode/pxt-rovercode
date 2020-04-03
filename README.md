@@ -36,14 +36,14 @@ set-left-motor:0\n
 set-right-motor:100\n
 ```
 
-### Sensor state
+### Light Sensor
 
 #### Direction
 micro:bit -> webapp
 
 #### Identifier
 
-`sensor-state`
+`light-sens`
 
 #### Data
 
@@ -51,25 +51,216 @@ micro:bit -> webapp
 |----------|-----------------------------|--------|-------------------|
 | 0        | Left light sensor value     | Number | 0-255             |
 | 1        | Right light sensor value    | Number | 0-255             |
-| 2        | Left line sensor value      | Number | 0-1023            |
-| 3        | Right line sensor value     | Number | 0-1023            |
-| 4        | Sonar distance sensor value | Number | 0 - ? millimeters |
-| 5        | micro:bit ambient temp      | Number | Degrees C         |
-| 6        | micro:bit light level       | Number | 0 - 255           |
-| 7        | Acceleration (x)            | Number | milligravities    |
-| 8        | Acceleration (y)            | Number | milligravities    |
-| 9        | Acceleration (z)            | Number | milligravities    |
-| 10       | Rotation (pitch)            | Number | Degrees           |
-| 11       | Rotation (roll)             | Number | Degrees           |
-| 12       | Compass heading             | Number | Degrees           |
-| 13       | Battery voltage             | Number | milliVolts        |
-| 14       | Magnetic force              | Number | uT                |
-| 15       | Dew point                   | Number | Degrees C         |
 
 #### Example
 ```
-sensor-state:0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+light-sens:255,255
 ```
+
+### Line Sensor
+
+#### Direction
+micro:bit -> webapp
+
+#### Identifier
+
+`line-sens`
+
+#### Data
+
+| Index    | Description                 | Type   | Unit              |
+|----------|-----------------------------|--------|-------------------|
+| 0        | Left line sensor value      | Number | 0-1023            |
+| 1        | Right line sensor value     | Number | 0-1023            |
+
+#### Example
+```
+line-sens:1023,1023
+```
+
+### Distance Sensor
+
+#### Direction
+micro:bit -> webapp
+
+#### Identifier
+
+`dist-sens`
+
+#### Data
+
+| Index    | Description                 | Type   | Unit              |
+|----------|-----------------------------|--------|-------------------|
+| 0        | Sonar distance sensor value | Number | 0 - ? millimeters |
+
+#### Example
+```
+dist-sens:1000
+```
+
+### uBit Temperature Sensor
+
+#### Direction
+micro:bit -> webapp
+
+#### Identifier
+
+`ub-temp-sens`
+
+#### Data
+
+| Index    | Description                 | Type   | Unit              |
+|----------|-----------------------------|--------|-------------------|
+| 0        | micro:bit ambient temp      | Number | Degrees C         |
+
+#### Example
+```
+ub-temp-sens:24
+```
+
+### uBit Light Sensor
+
+#### Direction
+micro:bit -> webapp
+
+#### Identifier
+
+`ub-light-sens`
+
+#### Data
+
+| Index    | Description                 | Type   | Unit              |
+|----------|-----------------------------|--------|-------------------|
+| 0        | micro:bit light level       | Number | 0 - 255           |
+
+#### Example
+```
+ub-light-sens:255
+```
+
+### Acceleration Sensor
+
+#### Direction
+micro:bit -> webapp
+
+#### Identifier
+
+`accel`
+
+#### Data
+
+| Index    | Description                 | Type   | Unit              |
+|----------|-----------------------------|--------|-------------------|
+| 0        | Acceleration (x)            | Number | milligravities    |
+| 1        | Acceleration (y)            | Number | milligravities    |
+| 2        | Acceleration (z)            | Number | milligravities    |
+
+#### Example
+```
+accel:1000,1000,1000
+```
+
+### Gyroscope Sensor
+
+#### Direction
+micro:bit -> webapp
+
+#### Identifier
+
+`gyro`
+
+#### Data
+
+| Index    | Description                 | Type   | Unit              |
+|----------|-----------------------------|--------|-------------------|
+| 0        | Rotation (pitch)            | Number | Degrees           |
+| 1        | Rotation (roll)             | Number | Degrees           |
+
+#### Example
+```
+gyro:100,100
+```
+
+### Compass Sensor
+
+#### Direction
+micro:bit -> webapp
+
+#### Identifier
+
+`compass-sens`
+
+#### Data
+
+| Index    | Description                 | Type   | Unit              |
+|----------|-----------------------------|--------|-------------------|
+| 0        | Compass heading             | Number | Degrees            |
+
+#### Example
+```
+compass-sens:100
+```
+
+### Magnetic Force Sensor
+
+#### Direction
+micro:bit -> webapp
+
+#### Identifier
+
+`mag-sens`
+
+#### Data
+
+| Index    | Description                 | Type   | Unit              |
+|----------|-----------------------------|--------|-------------------|
+| 0        | Magnetic force              | Number | uT                |
+
+#### Example
+```
+mag-sens:60
+```
+
+### Battery Sensor
+
+#### Direction
+micro:bit -> webapp
+
+#### Identifier
+
+`battery-sens`
+
+#### Data
+
+| Index    | Description                 | Type   | Unit              |
+|----------|-----------------------------|--------|-------------------|
+| 0        | Battery voltage             | Number | milliVolts        |
+
+#### Example
+```
+battery-sens:3300
+```
+
+### Dew Point Sensor
+
+#### Direction
+micro:bit -> webapp
+
+#### Identifier
+
+`dewpoint-sens`
+
+#### Data
+
+| Index    | Description                 | Type   | Unit              |
+|----------|-----------------------------|--------|-------------------|
+| 0        | Dew point                   | Number | Degrees C         |
+
+#### Example
+```
+dewpoint-sens:24
+```
+
 
 ## TODO
 
