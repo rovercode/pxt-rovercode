@@ -1,25 +1,36 @@
+/*
+ * GLOBAL VARIABLES
+ */
 let value = 0;
 let command = "";
+let connected = false;
+
+/*
+ * EVENT HANDLERS
+ */
 input.onButtonPressed(Button.A, function() {
   bluetooth.uartWriteString("left-sensor:1");
 });
+
 input.onButtonPressed(Button.B, function() {
   bluetooth.uartWriteString("left-sensor:0");
 });
+
+bluetooth.onBluetoothDisconnected(function() {
+  connected = false;
+  basic.showIcon(IconNames.No);
+});
+
 bluetooth.onBluetoothConnected(function() {
-//   basic.showIcon(IconNames.Yes);
-  while (true) {
-    basic.showIcon(IconNames.Happy);
-    bluetooth.uartWriteString("sensor-state:0,0");
+  connected = true;
+  basic.showIcon(IconNames.Happy);
+  while (connected) {
+    // TODO: Read sensor values and build sensor-state string here.
+    bluetooth.uartWriteString("sensor-state:0,0,0,0,0,0,0,0,0,0,0,0,0,0");
     basic.pause(2000);
   }
 });
-input.onGesture(Gesture.Shake, function() {
-  bluetooth.uartWriteString("S");
-});
-bluetooth.onBluetoothDisconnected(function() {
-  basic.showIcon(IconNames.No);
-});
+
 bluetooth.onUartDataReceived(serial.delimiters(Delimiters.NewLine), function() {
   command = bluetooth.uartReadUntil(serial.delimiters(Delimiters.Colon));
   if ("left-motor" == command) {
@@ -35,7 +46,10 @@ bluetooth.onUartDataReceived(serial.delimiters(Delimiters.NewLine), function() {
     gigglebot.motorPowerAssign(gigglebotWhichMotor.Right, value);
     led.plotBrightness(0, 0, (value * 255) / 100);
   }
-  basic.showIcon(IconNames.Yes);
 });
+
+/*
+ * ON START
+ */
 bluetooth.startUartService();
-basic.showString("R")
+basic.showString("R")  // "R" for "ready"
