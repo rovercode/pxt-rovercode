@@ -16,13 +16,15 @@ The following protocol is used over the Nordic virtual BLE serial channel.
 The common format is `{identifier}:{comma-separated values}`.
 Messages from the webapp to the micro:bit end with a `\n`; messages from the micro:bit to the webapp do not.
 
+In all cases, "left" and "right" are when facing the direction that the micro:bit LED grid faces when plugged into the Gigglebot.
+
 ### Set motor power
 
 #### Direction
 webapp -> micro:bit
 
 #### Identifier
-`set-left-motor` and `set-right-motor`
+`set-left-motor` and `set-right-motor`.
 
 #### Data
 | Index    | Description                 | Type   | Unit              |
@@ -61,7 +63,7 @@ micro:bit -> webapp
 | 10       | Rotation (pitch)            | Number | Degrees           |
 | 11       | Rotation (roll)             | Number | Degrees           |
 | 12       | Compass heading             | Number | Degrees           |
-| 13       | Battery voltage             | Number | Degrees           |
+| 13       | Battery voltage             | Number | milliVolts        |
 | 14       | Magnetic force              | Number | uT                |
 | 15       | Dew point                   | Number | Degrees C         |
 
