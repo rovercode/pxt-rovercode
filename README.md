@@ -63,7 +63,7 @@ micro:bit -> webapp
 | 12       | Compass heading             | Number | Degrees           |
 | 13       | Battery voltage             | Number | Degrees           |
 | 14       | Magnetic force              | Number | uT                |
-| 15       | Dew point                   | Number | uT                |
+| 15       | Dew point                   | Number | Degrees C         |
 
 #### Example
 ```
