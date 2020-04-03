@@ -4,7 +4,7 @@
 
 ```bash
 $ npm install
-$ npm run build  # output at built/binary.hex
+$ npm run build  # output at built/rovercode.hex
 ```
 
 ## Protocol
