@@ -37,14 +37,14 @@ set-left-motor:0\n
 set-right-motor:100\n
 ```
 
-### Sensor status
+### Sensor state
 
 #### Direction
 micro:bit -> webapp
 
 #### Identifier
 
-`sensor-status`
+`sensor-state`
 
 #### Data
 
