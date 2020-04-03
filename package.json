@@ -9,7 +9,8 @@
   "private": false,
   "scripts": {
     "postinstall": "node_modules/pxt/pxt target microbit && node_modules/pxt/pxt install",
-    "build": "node_modules/pxt/pxt build && mv built/binary.hex built/rovercode.hex && echo '\n\nOutput at built/rovercode.hex'"
+    "build": "node_modules/pxt/pxt build && mv built/binary.hex built/rovercode.hex && echo '\n\nOutput at built/rovercode.hex'",
+    "flash:mac": "cp built/rovercode.hex /Volumes/MICROBIT/"
   },
   "devDependencies": {
     "pxt": "*"

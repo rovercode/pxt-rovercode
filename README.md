@@ -5,6 +5,7 @@
 ```bash
 $ npm install
 $ npm run build  # output at built/rovercode.hex
+$ npm run flash:mac  # flash rovercode.hex to the connected micro:bit. #TODO: add flash scripts for other OSes.
 ```
 
 ## Protocol
