@@ -4,8 +4,11 @@
 
 ```bash
 $ npm install
+$ npm run lint  # run the style checker
 $ npm run build  # output at built/rovercode.hex
-$ npm run flash:mac  # flash rovercode.hex to the connected micro:bit. #TODO: add flash scripts for other OSes.
+$ npm run flash:mac  # flash rovercode.hex to the micro:bit connected to your Mac
+$ # or
+$ npm run flash:linux  # flash rovercode.hex to the micro:bit connected to an Ubuntu machine 
 ```
 
 ## Protocol

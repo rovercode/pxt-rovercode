@@ -8,27 +8,27 @@ let connected = false;
 /*
  * EVENT HANDLERS
  */
-input.onButtonPressed(Button.A, function() {
+input.onButtonPressed(Button.A, () => {
   bluetooth.uartWriteString("left-sensor:1");
 });
 
-input.onButtonPressed(Button.B, function() {
+input.onButtonPressed(Button.B, () => {
   bluetooth.uartWriteString("left-sensor:0");
 });
 
-bluetooth.onBluetoothDisconnected(function() {
+bluetooth.onBluetoothDisconnected(() => {
   connected = false;
   basic.showIcon(IconNames.No);
 });
 
-bluetooth.onBluetoothConnected(function() {
+bluetooth.onBluetoothConnected(() => {
   connected = true;
   basic.showIcon(IconNames.Happy);
   while (connected) {
-    let leftLightSensorValue = gigglebot.lightReadSensor(
+    const leftLightSensorValue = gigglebot.lightReadSensor(
       gigglebotWhichTurnDirection.Left
     );
-    let rightLightSensorValue = gigglebot.lightReadSensor(
+    const rightLightSensorValue = gigglebot.lightReadSensor(
       gigglebotWhichTurnDirection.Right
     );
     bluetooth.uartWriteString(
@@ -42,15 +42,15 @@ bluetooth.onBluetoothConnected(function() {
   }
 });
 
-bluetooth.onUartDataReceived(serial.delimiters(Delimiters.NewLine), function() {
+bluetooth.onUartDataReceived(serial.delimiters(Delimiters.NewLine), () => {
   command = bluetooth.uartReadUntil(serial.delimiters(Delimiters.Colon));
-  if ("left-motor" == command) {
+  if ("left-motor" === command) {
     value = parseFloat(
       bluetooth.uartReadUntil(serial.delimiters(Delimiters.NewLine))
     );
     gigglebot.motorPowerAssign(gigglebotWhichMotor.Left, value);
     led.plotBrightness(0, 0, (value * 255) / 100);
-  } else if ("right-motor" == command) {
+  } else if ("right-motor" === command) {
     value = parseFloat(
       bluetooth.uartReadUntil(serial.delimiters(Delimiters.NewLine))
     );
