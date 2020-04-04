@@ -25,9 +25,20 @@ bluetooth.onBluetoothConnected(function() {
   connected = true;
   basic.showIcon(IconNames.Happy);
   while (connected) {
-    // TODO: Read sensor values and build sensor-state string here.
-    bluetooth.uartWriteString("sensor-state:0,0,0,0,0,0,0,0,0,0,0,0,0,0");
-    basic.pause(2000);
+    let leftLightSensorValue = gigglebot.lightReadSensor(
+      gigglebotWhichTurnDirection.Left
+    );
+    let rightLightSensorValue = gigglebot.lightReadSensor(
+      gigglebotWhichTurnDirection.Right
+    );
+    bluetooth.uartWriteString(
+      "light-sens:" +
+        convertToText(leftLightSensorValue) +
+        "," +
+        convertToText(rightLightSensorValue)
+    );
+
+     basic.pause(500);
   }
 });
 
@@ -52,4 +63,4 @@ bluetooth.onUartDataReceived(serial.delimiters(Delimiters.NewLine), function() {
  * ON START
  */
 bluetooth.startUartService();
-basic.showString("R")  // "R" for "ready"
+basic.showString("R"); // "R" for "ready"
