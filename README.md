@@ -4,8 +4,11 @@
 
 ```bash
 $ npm install
+$ npm run lint  # run the style checker
 $ npm run build  # output at built/rovercode.hex
-$ npm run flash:mac  # flash rovercode.hex to the connected micro:bit. #TODO: add flash scripts for other OSes.
+$ npm run flash:mac  # flash rovercode.hex to the micro:bit connected to your Mac
+$ # or
+$ npm run flash:linux  # flash rovercode.hex to the micro:bit connected to an Ubuntu machine 
 ```
 
 ## Protocol
@@ -49,12 +52,12 @@ micro:bit -> webapp
 
 | Index    | Description                 | Type   | Unit              |
 |----------|-----------------------------|--------|-------------------|
-| 0        | Left light sensor value     | Number | 0-255             |
-| 1        | Right light sensor value    | Number | 0-255             |
+| 0        | Left light sensor value     | Number | 0-1023            |
+| 1        | Right light sensor value    | Number | 0-1023            |
 
 #### Example
 ```
-light-sens:255,255
+light-sens:1023,1023
 ```
 
 ### Line Sensor
