@@ -26,17 +26,18 @@ In all cases, "left" and "right" are when facing the direction that the micro:bi
 webapp -> micro:bit
 
 #### Identifier
-`set-left-motor` and `set-right-motor`.
+`left-motor` and `right-motor` and `both-motors`.
 
 #### Data
 | Index    | Description                 | Type   | Unit              |
 |----------|-----------------------------|--------|-------------------|
-| 0        | Motor power                 | Number | 0-100             |
+| 0        | Motor power                 | Number | -100 to 100       |
 
 #### Example
 ```
-set-left-motor:0\n
-set-right-motor:100\n
+left-motor:0\n
+right-motor:100\n
+both-motors:-40\n
 ```
 
 ### Light Sensor

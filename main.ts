@@ -55,7 +55,14 @@ bluetooth.onUartDataReceived(serial.delimiters(Delimiters.NewLine), () => {
       bluetooth.uartReadUntil(serial.delimiters(Delimiters.NewLine))
     );
     gigglebot.motorPowerAssign(gigglebotWhichMotor.Right, value);
+    led.plotBrightness(4, 0, (value * 255) / 100);
+  } else if ("both-motors" === command) {
+    value = parseFloat(
+      bluetooth.uartReadUntil(serial.delimiters(Delimiters.NewLine))
+    );
+    gigglebot.motorPowerAssign(gigglebotWhichMotor.Both, value);
     led.plotBrightness(0, 0, (value * 255) / 100);
+    led.plotBrightness(4, 0, (value * 255) / 100);
   }
 });
 
