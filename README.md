@@ -82,7 +82,8 @@ micro:bit -> webapp
 line-sens:1023,1023
 ```
 
-### Distance Sensor
+### Distance Sensor (NOT IMPLEMENTED)
+Support for the distance sensor is not implemented yet. The Gigglebot helper function causes a large jump in our program memory size.
 
 #### Direction
 micro:bit -> webapp
@@ -185,7 +186,8 @@ micro:bit -> webapp
 gyro:100,100
 ```
 
-### Compass Sensor
+### Compass Sensor (NOT IMPLEMENTED)
+Support for the compass sensor is not implemented yet. When we try it, we see unknown runtime errors.
 
 #### Direction
 micro:bit -> webapp
@@ -205,7 +207,8 @@ micro:bit -> webapp
 compass-sens:100
 ```
 
-### Magnetic Force Sensor
+### Magnetic Force Sensor (NOT IMPLEMENTED)
+Support for the magnetic force sensor is not implemented yet. When we try it, we see unknown runtime errors.
 
 #### Direction
 micro:bit -> webapp
@@ -218,11 +221,13 @@ micro:bit -> webapp
 
 | Index    | Description                 | Type   | Unit              |
 |----------|-----------------------------|--------|-------------------|
-| 0        | Magnetic force              | Number | uT                |
+| 0        | Magnetic force (x)          | Number | uT                |
+| 1        | Magnetic force (y)          | Number | uT                |
+| 2        | Magnetic force (z)          | Number | uT                |
 
 #### Example
 ```
-mag-sens:60
+mag-sens:60,80,100
 ```
 
 ### Battery Sensor
@@ -245,7 +250,8 @@ micro:bit -> webapp
 battery-sens:3300
 ```
 
-### Dew Point Sensor
+### Dew Point Sensor (NOT IMPLEMENTED)
+Support for the dew point sensor is not implemented yet. When we try it, we see unknown runtime errors.
 
 #### Direction
 micro:bit -> webapp
@@ -264,22 +270,6 @@ micro:bit -> webapp
 ```
 dewpoint-sens:24
 ```
-
-
-## TODO
-
-- [ ] Add a reference for your blocks here
-- [ ] Add "icon.png" image (300x200) in the root folder
-- [ ] Add "- beta" to the GitHub project description if you are still iterating it.
-- [ ] Turn on your automated build on https://travis-ci.org
-- [ ] Use "pxt bump" to create a tagged release on GitHub
-- [ ] Get your package reviewed and approved https://makecode.microbit.org/packages/approval
-
-Read more at https://makecode.microbit.org/packages/build-your-own
-
-## License
-
-
 
 ## Supported targets
 
