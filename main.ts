@@ -18,6 +18,7 @@ input.onButtonPressed(Button.B, () => {
 
 bluetooth.onBluetoothDisconnected(() => {
   connected = false;
+  gigglebot.motorPowerAssign(gigglebotWhichMotor.Both, 0);
   basic.showIcon(IconNames.No);
 });
 
