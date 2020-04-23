@@ -1,7 +1,8 @@
 /*
  * GLOBAL VARIABLES
  */
-let connected = false;
+let connectEventFlag = false;
+let disconnectEventFlag = false;
 
 /*
  * EVENT HANDLERS
@@ -15,11 +16,11 @@ input.onButtonPressed(Button.B, () => {
 });
 
 bluetooth.onBluetoothDisconnected(() => {
-  connected = false;
+  disconnectEventFlag = true;
 });
 
 bluetooth.onBluetoothConnected(() => {
-  connected = true;
+  connectEventFlag = true;
 });
 
 bluetooth.onUartDataReceived(serial.delimiters(Delimiters.NewLine), () => {
@@ -51,15 +52,23 @@ bluetooth.onUartDataReceived(serial.delimiters(Delimiters.NewLine), () => {
 /*
  * ON START
  */
+let connected = false;
 bluetooth.startUartService();
+basic.showString("R"); // "R" for "ready"
 
 while(true) {
-  if (!connected) {
-    gigglebot.motorPowerAssign(gigglebotWhichMotor.Both, 0);
-    basic.showString("R"); // "R" for "ready"
-  } else {
+  if (connectEventFlag) {
+    connected = true;
     basic.showIcon(IconNames.Happy);
-
+    connectEventFlag = false;
+  }
+  if (disconnectEventFlag) {
+    connected = false;
+    basic.showString("R");
+    gigglebot.motorPowerAssign(gigglebotWhichMotor.Both, 0);
+    disconnectEventFlag = false;
+  }
+  if (connected) {
     /* Light sensors */
     bluetooth.uartWriteString(
       "light-sens:" +
