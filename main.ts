@@ -4,6 +4,18 @@
 let value = 0;
 let command = "";
 let connected = false;
+let leftLightSensorValue;
+let rightLightSensorValue;
+let leftLine;
+let rightLine;
+let microbitLightLevel;
+let microbitTemperature;
+let xAcceleration;
+let yAcceleration;
+let zAcceleration;
+let pitch;
+let roll;
+let batteryVoltage;
 
 /*
  * EVENT HANDLERS
@@ -28,10 +40,10 @@ bluetooth.onBluetoothConnected(() => {
   while (connected) {
 
     /* Light sensors */
-    const leftLightSensorValue = gigglebot.lightReadSensor(
+    leftLightSensorValue = gigglebot.lightReadSensor(
       gigglebotWhichTurnDirection.Left
     );
-    const rightLightSensorValue = gigglebot.lightReadSensor(
+    rightLightSensorValue = gigglebot.lightReadSensor(
       gigglebotWhichTurnDirection.Right
     );
     bluetooth.uartWriteString(
@@ -42,8 +54,8 @@ bluetooth.onBluetoothConnected(() => {
     );
 
     /* Line */
-    const leftLine = gigglebot.lineReadSensor(gigglebotWhichTurnDirection.Left);
-    const rightLine = gigglebot.lineReadSensor(gigglebotWhichTurnDirection.Right);
+    leftLine = gigglebot.lineReadSensor(gigglebotWhichTurnDirection.Left);
+    rightLine = gigglebot.lineReadSensor(gigglebotWhichTurnDirection.Right);
     bluetooth.uartWriteString(
       "line-sens:" +
         convertToText(leftLine) +
@@ -52,16 +64,16 @@ bluetooth.onBluetoothConnected(() => {
     );
 
     /* micro:bit temperature */
-    const microbitTemperature = input.temperature();
+    microbitTemperature = input.temperature();
     bluetooth.uartWriteString(
       "ub-temp-sens:" +
         convertToText(microbitTemperature)
     );
 
     /* Acceleration */
-    const xAcceleration = input.acceleration(Dimension.X);
-    const yAcceleration = input.acceleration(Dimension.Y);
-    const zAcceleration = input.acceleration(Dimension.Z);
+    xAcceleration = input.acceleration(Dimension.X);
+    yAcceleration = input.acceleration(Dimension.Y);
+    zAcceleration = input.acceleration(Dimension.Z);
     bluetooth.uartWriteString(
       "accel:" +
         convertToText(xAcceleration) +
@@ -72,8 +84,8 @@ bluetooth.onBluetoothConnected(() => {
     );
 
     /* Gyro */
-    const pitch = input.rotation(Rotation.Pitch);
-    const roll = input.rotation(Rotation.Roll);
+    pitch = input.rotation(Rotation.Pitch);
+    roll = input.rotation(Rotation.Roll);
     bluetooth.uartWriteString(
       "gyro:" +
         convertToText(pitch) +
@@ -82,14 +94,14 @@ bluetooth.onBluetoothConnected(() => {
     );
 
     /* Battery voltage */
-    const batteryVoltage =  gigglebot.voltageBattery();
+    batteryVoltage =  gigglebot.voltageBattery();
     bluetooth.uartWriteString(
       "battery-sens:" +
         convertToText(batteryVoltage)
     );
 
     /* micro:bit ambient light */
-    const microbitLightLevel = input.lightLevel();
+    microbitLightLevel = input.lightLevel();
     bluetooth.uartWriteString(
       "ub-light-sens:" +
         convertToText(microbitLightLevel)
