@@ -1,9 +1,8 @@
 /*
  * GLOBAL VARIABLES
  */
-let value = 0;
-let command = "";
-let connected = false;
+let connectEventFlag = false;
+let disconnectEventFlag = false;
 
 /*
  * EVENT HANDLERS
@@ -17,89 +16,16 @@ input.onButtonPressed(Button.B, () => {
 });
 
 bluetooth.onBluetoothDisconnected(() => {
-  connected = false;
-  gigglebot.motorPowerAssign(gigglebotWhichMotor.Both, 0);
-  basic.showIcon(IconNames.No);
+  disconnectEventFlag = true;
 });
 
 bluetooth.onBluetoothConnected(() => {
-  connected = true;
-  basic.showIcon(IconNames.Happy);
-  while (connected) {
-
-    /* Light sensors */
-    const leftLightSensorValue = gigglebot.lightReadSensor(
-      gigglebotWhichTurnDirection.Left
-    );
-    const rightLightSensorValue = gigglebot.lightReadSensor(
-      gigglebotWhichTurnDirection.Right
-    );
-    bluetooth.uartWriteString(
-      "light-sens:" +
-        convertToText(leftLightSensorValue) +
-        "," +
-        convertToText(rightLightSensorValue)
-    );
-
-    /* Line */
-    const leftLine = gigglebot.lineReadSensor(gigglebotWhichTurnDirection.Left);
-    const rightLine = gigglebot.lineReadSensor(gigglebotWhichTurnDirection.Right);
-    bluetooth.uartWriteString(
-      "line-sens:" +
-        convertToText(leftLine) +
-        "," +
-        convertToText(rightLine)
-    );
-
-    /* micro:bit temperature */
-    const microbitTemperature = input.temperature();
-    bluetooth.uartWriteString(
-      "ub-temp-sens:" +
-        convertToText(microbitTemperature)
-    );
-
-    /* Acceleration */
-    const xAcceleration = input.acceleration(Dimension.X);
-    const yAcceleration = input.acceleration(Dimension.Y);
-    const zAcceleration = input.acceleration(Dimension.Z);
-    bluetooth.uartWriteString(
-      "accel:" +
-        convertToText(xAcceleration) +
-        "," +
-        convertToText(yAcceleration) +
-        "," +
-        convertToText(zAcceleration)
-    );
-
-    /* Gyro */
-    const pitch = input.rotation(Rotation.Pitch);
-    const roll = input.rotation(Rotation.Roll);
-    bluetooth.uartWriteString(
-      "gyro:" +
-        convertToText(pitch) +
-        "," +
-        convertToText(roll)
-    );
-
-    /* Battery voltage */
-    const batteryVoltage =  gigglebot.voltageBattery();
-    bluetooth.uartWriteString(
-      "battery-sens:" +
-        convertToText(batteryVoltage)
-    );
-
-    /* micro:bit ambient light */
-    const microbitLightLevel = input.lightLevel();
-    bluetooth.uartWriteString(
-      "ub-light-sens:" +
-        convertToText(microbitLightLevel)
-    );
-
-    basic.pause(500);
-  }
+  connectEventFlag = true;
 });
 
 bluetooth.onUartDataReceived(serial.delimiters(Delimiters.NewLine), () => {
+  let value = 0;
+  let command = "";
   command = bluetooth.uartReadUntil(serial.delimiters(Delimiters.Colon));
   if ("left-motor" === command) {
     value = parseFloat(
@@ -126,5 +52,74 @@ bluetooth.onUartDataReceived(serial.delimiters(Delimiters.NewLine), () => {
 /*
  * ON START
  */
+let connected = false;
 bluetooth.startUartService();
 basic.showString("R"); // "R" for "ready"
+
+while(true) {
+  if (connectEventFlag) {
+    connected = true;
+    basic.showIcon(IconNames.Happy);
+    connectEventFlag = false;
+  }
+  if (disconnectEventFlag) {
+    connected = false;
+    basic.showString("R");
+    gigglebot.motorPowerAssign(gigglebotWhichMotor.Both, 0);
+    disconnectEventFlag = false;
+  }
+  if (connected) {
+    /* Light sensors */
+    bluetooth.uartWriteString(
+      "light-sens:" +
+        convertToText(gigglebot.lineReadSensor(gigglebotWhichTurnDirection.Left)) +
+        "," +
+        convertToText(gigglebot.lineReadSensor(gigglebotWhichTurnDirection.Right))
+    );
+
+    /* Line */
+    bluetooth.uartWriteString(
+      "line-sens:" +
+        convertToText(gigglebot.lineReadSensor(gigglebotWhichTurnDirection.Left)) +
+        "," +
+        convertToText(gigglebot.lineReadSensor(gigglebotWhichTurnDirection.Left))
+    );
+
+    /* micro:bit temperature */
+    bluetooth.uartWriteString(
+      "ub-temp-sens:" +
+        convertToText(input.temperature())
+    );
+
+    /* Acceleration */
+    bluetooth.uartWriteString(
+      "accel:" +
+        convertToText(input.acceleration(Dimension.X)) +
+        "," +
+        convertToText(input.acceleration(Dimension.Y)) +
+        "," +
+        convertToText(input.acceleration(Dimension.Z))
+    );
+
+    /* Gyro */
+    bluetooth.uartWriteString(
+      "gyro:" +
+        convertToText(input.rotation(Rotation.Pitch)) +
+        "," +
+        convertToText(input.rotation(Rotation.Roll))
+    );
+
+    /* Battery voltage */
+    bluetooth.uartWriteString(
+      "battery-sens:" +
+        convertToText(gigglebot.voltageBattery())
+    );
+
+    /* micro:bit ambient light */
+    bluetooth.uartWriteString(
+      "ub-light-sens:" +
+        convertToText(input.lightLevel())
+    );
+  }
+  basic.pause(500);
+}
