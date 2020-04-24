@@ -18,5 +18,8 @@
     "pxt": "*",
     "tslint": "^6.1.1",
     "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "pxt-microbit": "^2.3.9"
   }
 }
