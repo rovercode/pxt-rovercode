@@ -8,7 +8,7 @@
   "license": "GPL-3.0",
   "private": false,
   "scripts": {
-    "postinstall": "bash pxt-setup.sh microbit 2.3.9",
+    "postinstall": "bash pxt-setup.sh microbit",
     "lint": "node_modules/tslint/bin/tslint *ts",
     "build": "node_modules/pxt/pxt build && mv built/binary.hex built/rovercode.hex && echo '\n\nOutput at built/rovercode.hex'",
     "flash:mac": "cp built/rovercode.hex /Volumes/MICROBIT/",
@@ -20,6 +20,6 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "pxt-microbit": "^2.3.9"
+    "pxt-microbit": "2.3.9"
   }
 }
