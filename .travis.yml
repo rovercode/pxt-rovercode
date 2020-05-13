@@ -9,40 +9,24 @@ cache:
   directories:
   - npm_modules
   - pxt_modules
+before_deploy:
+- sudo pip install --upgrade awscli && aws --version
 deploy:
-  - provider: s3
+  - provider: script
     skip_cleanup: true
-    access_key_id: $AWS_KEY_NAME
-    secret_access_key: $AWS_KEY_SECRET
-    bucket: rovercode-pxt
-    region: us-east-2
-    local_dir: built
-    upload_dir: prod
-    acl: public_read
-    on:
-      repo: rovercode/pxt-rovercode
-      branch: master
-  - provider: s3
-    skip_cleanup: true
-    access_key_id: $AWS_KEY_NAME
-    secret_access_key: $AWS_KEY_SECRET
-    bucket: rovercode-pxt
-    region: us-east-2
-    local_dir: built
-    upload_dir: beta
-    acl: public_read
-    on:
-      repo: rovercode/pxt-rovercode
-      branch: beta
-  - provider: s3
-    skip_cleanup: true
-    access_key_id: $AWS_KEY_NAME
-    secret_access_key: $AWS_KEY_SECRET
-    bucket: rovercode-pxt
-    region: us-east-2
-    local_dir: built
-    upload_dir: alpha
-    acl: public_read
+    script: bash deploy.sh alpha
     on:
       repo: rovercode/pxt-rovercode
       branch: alpha
+  - provider: script
+    skip_cleanup: true
+    script: bash deploy.sh beta
+    on:
+      repo: rovercode/pxt-rovercode
+      branch: beta
+  - provider: script
+    skip_cleanup: true
+    script: bash deploy.sh prod
+    on:
+      repo: rovercode/pxt-rovercode
+      branch: master
