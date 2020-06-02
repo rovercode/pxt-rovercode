@@ -72,18 +72,19 @@ while(true) {
     /* Light sensors */
     bluetooth.uartWriteString(
       "light-sens:" +
-        convertToText(gigglebot.lineReadSensor(gigglebotWhichTurnDirection.Left)) +
+        convertToText(gigglebot.lightReadSensor(gigglebotWhichTurnDirection.Left)) +
         "," +
-        convertToText(gigglebot.lineReadSensor(gigglebotWhichTurnDirection.Right))
+        convertToText(gigglebot.lightReadSensor(gigglebotWhichTurnDirection.Right))
     );
 
-    /* Line */
-    bluetooth.uartWriteString(
-      "line-sens:" +
-        convertToText(gigglebot.lineReadSensor(gigglebotWhichTurnDirection.Left)) +
-        "," +
-        convertToText(gigglebot.lineReadSensor(gigglebotWhichTurnDirection.Left))
-    );
+    // TODO: Figure out why this doesn't work with light sensors above.
+    // /* Line */
+    // bluetooth.uartWriteString(
+    //   "line-sens:" +
+    //     convertToText(gigglebot.lineReadSensor(gigglebotWhichTurnDirection.Left)) +
+    //     "," +
+    //     convertToText(gigglebot.lineReadSensor(gigglebotWhichTurnDirection.Left))
+    // );
 
     /* micro:bit temperature */
     bluetooth.uartWriteString(
