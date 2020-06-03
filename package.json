@@ -1,0 +1,25 @@
+{
+  "name": "pxt-rovercode",
+  "version": "0.0.1",
+  "description": "Rovercode PXT service for micro:bit",
+  "main": "/main.ts",
+  "repository": "https://github.com/rovercode/rovercode-pxt",
+  "author": "Brady Hurlburt",
+  "license": "GPL-3.0",
+  "private": false,
+  "scripts": {
+    "postinstall": "bash pxt-setup.sh microbit",
+    "lint": "node_modules/tslint/bin/tslint *ts",
+    "build": "node_modules/pxt/pxt build && mv built/binary.hex built/rovercode.hex && echo '\n\nOutput at built/rovercode.hex'",
+    "flash:mac": "cp built/rovercode.hex /Volumes/MICROBIT/",
+    "flash:linux": "cp built/rovercode.hex /media/${USER}/MICROBIT/"
+  },
+  "devDependencies": {
+    "pxt": "*",
+    "tslint": "^6.1.1",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "pxt-microbit": "2.3.9"
+  }
+}
