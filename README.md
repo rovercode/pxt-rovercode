@@ -271,6 +271,24 @@ micro:bit -> webapp
 dewpoint-sens:24
 ```
 
+### Buttons
+
+#### Direction
+micro:bit -> webapp
+
+#### Identifier
+`button`
+
+#### Data
+| Index    | Description                 | Type   | Unit              |
+|----------|-----------------------------|--------|-------------------|
+| 0        | Button identifier           | Letter | None              |
+
+#### Example
+```
+button:a
+```
+
 ## Supported targets
 
 * for PXT/microbit
