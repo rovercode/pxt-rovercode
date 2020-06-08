@@ -108,11 +108,11 @@ while(true) {
         convertToText(gigglebot.voltageBattery())
     );
 
-    /* micro:bit temperature */
-    bluetooth.uartWriteString(
-      "ub-temp-sens:" +
-        convertToText(input.temperature())
-    );
+    // /* micro:bit temperature */
+    // bluetooth.uartWriteString(
+    //   "ub-temp-sens:" +
+    //     convertToText(input.temperature())
+    // );
 
     // TODO: Figure out why this doesn't work with light sensors above.
     // /* Line */
