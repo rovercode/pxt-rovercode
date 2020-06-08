@@ -79,11 +79,12 @@ while(true) {
     disconnectEventFlag = false;
   }
   if (connected) {
-    /* Buttons */
     while (busyHandlingCommand) {
       basic.pause(10);
     };
     busyPolling = true;
+
+    /* Buttons */
     if (buttonAEventFlag) {
       bluetooth.uartWriteString("button:a");
       buttonAEventFlag = false;
@@ -101,7 +102,17 @@ while(true) {
         convertToText(gigglebot.lightReadSensor(gigglebotWhichTurnDirection.Right))
     );
 
-    busyPolling = false;
+    /* Battery voltage */
+    bluetooth.uartWriteString(
+      "battery-sens:" +
+        convertToText(gigglebot.voltageBattery())
+    );
+
+    /* micro:bit temperature */
+    bluetooth.uartWriteString(
+      "ub-temp-sens:" +
+        convertToText(input.temperature())
+    );
 
     // TODO: Figure out why this doesn't work with light sensors above.
     // /* Line */
@@ -110,12 +121,6 @@ while(true) {
     //     convertToText(gigglebot.lineReadSensor(gigglebotWhichTurnDirection.Left)) +
     //     "," +
     //     convertToText(gigglebot.lineReadSensor(gigglebotWhichTurnDirection.Left))
-    // );
-
-    // /* micro:bit temperature */
-    // bluetooth.uartWriteString(
-    //   "ub-temp-sens:" +
-    //     convertToText(input.temperature())
     // );
 
     // /* Acceleration */
@@ -136,17 +141,13 @@ while(true) {
     //     convertToText(input.rotation(Rotation.Roll))
     // );
 
-    // /* Battery voltage */
-    // bluetooth.uartWriteString(
-    //   "battery-sens:" +
-    //     convertToText(gigglebot.voltageBattery())
-    // );
-
     // /* micro:bit ambient light */
     // bluetooth.uartWriteString(
     //   "ub-light-sens:" +
     //     convertToText(input.lightLevel())
     // );
+
+    busyPolling = false;
   }
   basic.pause(500);
 }
