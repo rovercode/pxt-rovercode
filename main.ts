@@ -8,11 +8,11 @@ let disconnectEventFlag = false;
  * EVENT HANDLERS
  */
 input.onButtonPressed(Button.A, () => {
-  bluetooth.uartWriteString("left-sensor:1");
+  bluetooth.uartWriteString("button:a");
 });
 
 input.onButtonPressed(Button.B, () => {
-  bluetooth.uartWriteString("left-sensor:0");
+  bluetooth.uartWriteString("button:b");
 });
 
 bluetooth.onBluetoothDisconnected(() => {
