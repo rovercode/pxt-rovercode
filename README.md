@@ -274,7 +274,7 @@ dewpoint-sens:24
 ### Buttons
 
 #### Direction
-webapp -> micro:bit
+micro:bit -> webapp
 
 #### Identifier
 `button`
@@ -286,7 +286,7 @@ webapp -> micro:bit
 
 #### Example
 ```
-button:a\n
+button:a
 ```
 
 ## Supported targets
