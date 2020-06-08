@@ -3,16 +3,18 @@
  */
 let connectEventFlag = false;
 let disconnectEventFlag = false;
+let buttonAEventFlag = false;
+let buttonBEventFlag = false;
 
 /*
  * EVENT HANDLERS
  */
 input.onButtonPressed(Button.A, () => {
-  bluetooth.uartWriteString("button:a");
+  buttonAEventFlag = true;
 });
 
 input.onButtonPressed(Button.B, () => {
-  bluetooth.uartWriteString("button:b");
+  buttonBEventFlag = true;
 });
 
 bluetooth.onBluetoothDisconnected(() => {
@@ -69,6 +71,16 @@ while(true) {
     disconnectEventFlag = false;
   }
   if (connected) {
+    /* Buttons */
+    if (buttonAEventFlag) {
+      bluetooth.uartWriteString("button:a");
+      buttonAEventFlag = false;
+    }
+    if (buttonBEventFlag) {
+      bluetooth.uartWriteString("button:b");
+      buttonBEventFlag = false;
+    }
+
     /* Light sensors */
     bluetooth.uartWriteString(
       "light-sens:" +
