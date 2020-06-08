@@ -40,6 +40,24 @@ right-motor:100\n
 both-motors:-40\n
 ```
 
+### Display Message
+
+#### Direction
+webapp -> micro:bit
+
+#### Identifier
+`disp`.
+
+#### Data
+| Index    | Description                 | Type   | Unit              |
+|----------|-----------------------------|--------|-------------------|
+| 0        | Message                     | String | n/a               |
+
+#### Example
+```
+disp:hello world\n
+```
+
 ### Light Sensor
 
 #### Direction
