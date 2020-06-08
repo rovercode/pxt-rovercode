@@ -29,7 +29,7 @@ bluetooth.onBluetoothConnected(() => {
 
 bluetooth.onUartDataReceived(serial.delimiters(Delimiters.NewLine), () => {
   while (busyPolling) {
-    basic.pause(50);
+    basic.pause(10);
   }
   busyHandlingCommand = true;
   let value = 0;
@@ -55,7 +55,6 @@ bluetooth.onUartDataReceived(serial.delimiters(Delimiters.NewLine), () => {
     message = bluetooth.uartReadUntil(serial.delimiters(Delimiters.NewLine));
     basic.showString(message);
     basic.showIcon(IconNames.Happy);
-    basic.pause(1000);
   }
   busyHandlingCommand = false;
 });
@@ -82,7 +81,7 @@ while(true) {
   if (connected) {
     /* Buttons */
     while (busyHandlingCommand) {
-      basic.pause(50);
+      basic.pause(10);
     };
     busyPolling = true;
     if (buttonAEventFlag) {
