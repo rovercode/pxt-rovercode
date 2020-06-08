@@ -5,6 +5,8 @@ let connectEventFlag = false;
 let disconnectEventFlag = false;
 let buttonAEventFlag = false;
 let buttonBEventFlag = false;
+let busyPolling = false;
+let busyHandlingCommand = false;
 
 /*
  * EVENT HANDLERS
@@ -26,29 +28,35 @@ bluetooth.onBluetoothConnected(() => {
 });
 
 bluetooth.onUartDataReceived(serial.delimiters(Delimiters.NewLine), () => {
+  while (busyPolling) {
+    basic.pause(10);
+  }
+  busyHandlingCommand = true;
   let value = 0;
   let command = "";
+  let message = "";
   command = bluetooth.uartReadUntil(serial.delimiters(Delimiters.Colon));
   if ("left-motor" === command) {
     value = parseFloat(
       bluetooth.uartReadUntil(serial.delimiters(Delimiters.NewLine))
     );
     gigglebot.motorPowerAssign(gigglebotWhichMotor.Left, value);
-    led.plotBrightness(0, 0, (value * 255) / 100);
   } else if ("right-motor" === command) {
     value = parseFloat(
       bluetooth.uartReadUntil(serial.delimiters(Delimiters.NewLine))
     );
     gigglebot.motorPowerAssign(gigglebotWhichMotor.Right, value);
-    led.plotBrightness(4, 0, (value * 255) / 100);
   } else if ("both-motors" === command) {
     value = parseFloat(
       bluetooth.uartReadUntil(serial.delimiters(Delimiters.NewLine))
     );
     gigglebot.motorPowerAssign(gigglebotWhichMotor.Both, value);
-    led.plotBrightness(0, 0, (value * 255) / 100);
-    led.plotBrightness(4, 0, (value * 255) / 100);
+  } else if ("disp" === command) {
+    message = bluetooth.uartReadUntil(serial.delimiters(Delimiters.NewLine));
+    basic.showString(message);
+    basic.showIcon(IconNames.Happy);
   }
+  busyHandlingCommand = false;
 });
 
 /*
@@ -71,6 +79,11 @@ while(true) {
     disconnectEventFlag = false;
   }
   if (connected) {
+    while (busyHandlingCommand) {
+      basic.pause(10);
+    };
+    busyPolling = true;
+
     /* Buttons */
     if (buttonAEventFlag) {
       bluetooth.uartWriteString("button:a");
@@ -89,6 +102,18 @@ while(true) {
         convertToText(gigglebot.lightReadSensor(gigglebotWhichTurnDirection.Right))
     );
 
+    /* Battery voltage */
+    bluetooth.uartWriteString(
+      "battery-sens:" +
+        convertToText(gigglebot.voltageBattery())
+    );
+
+    // /* micro:bit temperature */
+    // bluetooth.uartWriteString(
+    //   "ub-temp-sens:" +
+    //     convertToText(input.temperature())
+    // );
+
     // TODO: Figure out why this doesn't work with light sensors above.
     // /* Line */
     // bluetooth.uartWriteString(
@@ -98,41 +123,31 @@ while(true) {
     //     convertToText(gigglebot.lineReadSensor(gigglebotWhichTurnDirection.Left))
     // );
 
-    /* micro:bit temperature */
-    bluetooth.uartWriteString(
-      "ub-temp-sens:" +
-        convertToText(input.temperature())
-    );
+    // /* Acceleration */
+    // bluetooth.uartWriteString(
+    //   "accel:" +
+    //     convertToText(input.acceleration(Dimension.X)) +
+    //     "," +
+    //     convertToText(input.acceleration(Dimension.Y)) +
+    //     "," +
+    //     convertToText(input.acceleration(Dimension.Z))
+    // );
 
-    /* Acceleration */
-    bluetooth.uartWriteString(
-      "accel:" +
-        convertToText(input.acceleration(Dimension.X)) +
-        "," +
-        convertToText(input.acceleration(Dimension.Y)) +
-        "," +
-        convertToText(input.acceleration(Dimension.Z))
-    );
+    // /* Gyro */
+    // bluetooth.uartWriteString(
+    //   "gyro:" +
+    //     convertToText(input.rotation(Rotation.Pitch)) +
+    //     "," +
+    //     convertToText(input.rotation(Rotation.Roll))
+    // );
 
-    /* Gyro */
-    bluetooth.uartWriteString(
-      "gyro:" +
-        convertToText(input.rotation(Rotation.Pitch)) +
-        "," +
-        convertToText(input.rotation(Rotation.Roll))
-    );
+    // /* micro:bit ambient light */
+    // bluetooth.uartWriteString(
+    //   "ub-light-sens:" +
+    //     convertToText(input.lightLevel())
+    // );
 
-    /* Battery voltage */
-    bluetooth.uartWriteString(
-      "battery-sens:" +
-        convertToText(gigglebot.voltageBattery())
-    );
-
-    /* micro:bit ambient light */
-    bluetooth.uartWriteString(
-      "ub-light-sens:" +
-        convertToText(input.lightLevel())
-    );
+    busyPolling = false;
   }
   basic.pause(500);
 }
