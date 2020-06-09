@@ -40,6 +40,24 @@ right-motor:100\n
 both-motors:-40\n
 ```
 
+### Display message
+
+#### Direction
+webapp -> micro:bit
+
+#### Identifier
+`disp`.
+
+#### Data
+| Index    | Description                 | Type   | Unit              |
+|----------|-----------------------------|--------|-------------------|
+| 0        | Message                     | String | n/a               |
+
+#### Example
+```
+disp:hello world\n
+```
+
 ### Light Sensor
 
 #### Direction
@@ -269,6 +287,24 @@ micro:bit -> webapp
 #### Example
 ```
 dewpoint-sens:24
+```
+
+### Buttons
+
+#### Direction
+micro:bit -> webapp
+
+#### Identifier
+`button`
+
+#### Data
+| Index    | Description                 | Type   | Unit              |
+|----------|-----------------------------|--------|-------------------|
+| 0        | Button identifier           | Letter | None              |
+
+#### Example
+```
+button:a
 ```
 
 ## Supported targets
