@@ -7,7 +7,30 @@ let buttonAEventFlag = false;
 let buttonBEventFlag = false;
 let busyPolling = false;
 let busyHandlingCommand = false;
+let sensors = [0, 0]
 
+function sensorsRaw(which: number): number[] {
+    // which is 4 for battery voltage
+    // which is 5 for line sensor
+    // which is 6 for light sensor
+    let buf = pins.createBuffer(1)
+    buf.setNumber(NumberFormat.UInt8BE, 0, which)
+    pins.i2cWriteBuffer(0x04, buf)
+    if (which == 4) {
+        pins.i2cWriteBuffer(0x04, buf)
+        let raw_buffer = pins.i2cReadBuffer(0x04, 2)
+        sensors[0] = raw_buffer.getNumber(NumberFormat.UInt16BE, 0)
+        sensors[1] = 0
+    } else {
+        let raw_buffer = pins.i2cReadBuffer(0x04, 3)
+        for (let _i = 0; _i < 2; _i++) {
+            sensors[_i] = (raw_buffer.getNumber(NumberFormat.UInt8BE, _i) << 2)
+            sensors[_i] |= (((raw_buffer.getNumber(NumberFormat.UInt8BE, 2) << (_i * 2)) & 0xC0) >> 6)
+            sensors[_i] = 1023 - sensors[_i]
+        }
+    }
+    return sensors
+}
 /*
  * EVENT HANDLERS
  */
@@ -102,18 +125,24 @@ while(true) {
     }
 
     /* Light sensors */
+    sensors = sensorsRaw(6)
     bluetooth.uartWriteString(
-      "light-sens:" +
-        convertToText(gigglebot.lightReadSensor(gigglebotWhichTurnDirection.Left)) +
-        "," +
-        convertToText(gigglebot.lightReadSensor(gigglebotWhichTurnDirection.Right))
+        "light-sens:" + convertToText(sensors[1]) + ", " + convertToText(sensors[0])
     );
 
-    /* Battery voltage */
+    /* Line */
+    sensors = sensorsRaw(5)
     bluetooth.uartWriteString(
-      "battery-sens:" +
-        convertToText(gigglebot.voltageBattery())
+        "line-sens:" +
+        convertToText(sensors[1]) + ", " + convertToText(sensors[0])
     );
+
+      /* Battery voltage */
+      sensors = sensorsRaw(4)
+      bluetooth.uartWriteString(
+          "battery-sens:" +
+          convertToText(sensors[0])
+      );
 
     // /* micro:bit temperature */
     // bluetooth.uartWriteString(
@@ -121,14 +150,7 @@ while(true) {
     //     convertToText(input.temperature())
     // );
 
-    // TODO: Figure out why this doesn't work with light sensors above.
-    // /* Line */
-    // bluetooth.uartWriteString(
-    //   "line-sens:" +
-    //     convertToText(gigglebot.lineReadSensor(gigglebotWhichTurnDirection.Left)) +
-    //     "," +
-    //     convertToText(gigglebot.lineReadSensor(gigglebotWhichTurnDirection.Left))
-    // );
+
 
     // /* Acceleration */
     // bluetooth.uartWriteString(
