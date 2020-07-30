@@ -13,19 +13,19 @@ function sensorsRaw(which: number): number[] {
     // which is 4 for battery voltage
     // which is 5 for line sensor
     // which is 6 for light sensor
-    let buf = pins.createBuffer(1)
+    const buf = pins.createBuffer(1)
     buf.setNumber(NumberFormat.UInt8BE, 0, which)
     pins.i2cWriteBuffer(0x04, buf)
-    if (which == 4) {
+    if (which === 4) {
         pins.i2cWriteBuffer(0x04, buf)
-        let raw_buffer = pins.i2cReadBuffer(0x04, 2)
-        sensors[0] = raw_buffer.getNumber(NumberFormat.UInt16BE, 0)
+        const rawBuffer = pins.i2cReadBuffer(0x04, 2)
+        sensors[0] = rawBuffer.getNumber(NumberFormat.UInt16BE, 0)
         sensors[1] = 0
     } else {
-        let raw_buffer = pins.i2cReadBuffer(0x04, 3)
+        const rawBuffer = pins.i2cReadBuffer(0x04, 3)
         for (let _i = 0; _i < 2; _i++) {
-            sensors[_i] = (raw_buffer.getNumber(NumberFormat.UInt8BE, _i) << 2)
-            sensors[_i] |= (((raw_buffer.getNumber(NumberFormat.UInt8BE, 2) << (_i * 2)) & 0xC0) >> 6)
+            sensors[_i] = (rawBuffer.getNumber(NumberFormat.UInt8BE, _i) << 2)
+            sensors[_i] |= (((rawBuffer.getNumber(NumberFormat.UInt8BE, 2) << (_i * 2)) & 0xC0) >> 6)
             sensors[_i] = 1023 - sensors[_i]
         }
     }
