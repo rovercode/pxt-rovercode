@@ -76,7 +76,7 @@ bluetooth.onUartDataReceived(serial.delimiters(Delimiters.NewLine), () => {
     gigglebot.motorPowerAssign(gigglebotWhichMotor.Both, value);
   } else if ("disp" === command) {
     message = bluetooth.uartReadUntil(serial.delimiters(Delimiters.NewLine));
-    basic.showString(message);
+    basic.showString(message, 100);
     basic.showIcon(IconNames.Happy);
   }
   busyHandlingCommand = false;
@@ -89,8 +89,8 @@ let connected = false;
 bluetooth.startUartService();
 basic.pause(500);
 basic.showString("R");
-basic.pause(2000);
-basic.showString(control.deviceName());
+basic.pause(1500);
+basic.showString(control.deviceName(), 125);
 basic.showString("R");
 
 while(true) {
